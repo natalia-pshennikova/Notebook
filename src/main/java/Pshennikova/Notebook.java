@@ -9,11 +9,13 @@ public class Notebook {
     private List<Record> records = new ArrayList<>();
 
     @Command
-    public void create(String firstName, String lastName, String phone) {
+    public void create(String firstName, String lastName, String email, String address, String... phones) {
         Record r = new Record();
         r.setFirstName(firstName);
         r.setLastName(lastName);
-        r.setPhone(phone);
+        r.setEmail(email);
+        r.setAddress(address);
+        r.setPhones(phones);
         records.add(r);
     }
 
@@ -21,6 +23,4 @@ public class Notebook {
     public List<Record> list(){
         return records;
     }
-
-
 }

@@ -1,13 +1,16 @@
 package Pshennikova;
 
 
+import java.util.Arrays;
+
 public class Record {
     private static int counter = 0;
     private int id;
     private String firstName;
     private String lastName;
-    private String phone;
-
+    private String email;
+    private String address;
+    private String[] phones;
     public Record() {
         counter++;
         id = counter;
@@ -33,12 +36,28 @@ public class Record {
         this.lastName = lastName;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String[] getPhones() {
+        return phones;
+    }
+
+    public void setPhones(String[] phones) {
+        this.phones = phones;
     }
 
     @Override
@@ -47,7 +66,9 @@ public class Record {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", phones=" + Arrays.toString(phones) +
                 '}';
     }
 }
