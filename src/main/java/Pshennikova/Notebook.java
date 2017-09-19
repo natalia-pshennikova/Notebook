@@ -9,14 +9,28 @@ public class Notebook {
     private List<Record> records = new ArrayList<>();
 
     @Command
-    public void create(String firstName, String lastName, String email, String address, String... phones) {
-        Record r = new Record();
+    public void createPerson(String firstName, String lastName, String email, String address, String... phones) {
+        Person r = new Person();
         r.setFirstName(firstName);
         r.setLastName(lastName);
         r.setEmail(email);
         r.setAddress(address);
-        r.setPhones(phones);
+        r.addPhones(phones);
         records.add(r);
+    }
+    @Command
+    public void createNote(String text) {
+        Note n = new Note();
+        n.setText(text);
+        records.add(n);
+}
+
+    @Command
+    public void createReminder(String text, String time) {
+        Reminder rm = new Reminder();
+        rm.setText(text);
+        rm.setTime(time);
+        records.add(rm);
     }
 
     @Command
@@ -26,11 +40,11 @@ public class Notebook {
 
     @Command
     public void remove(int id) {
-        for (int i = 0; i < records.size(); i++) { // цикл по всем индексам
-            Record r = records.get(i);     // берем запись по текущему индексу
-            if (r.getId() == id) {         // если у записи айдишка совпадает с искомой
-                records.remove(i);         // удаляем по индексу
-                break;                     // заканчиваем цикл досрочно
+        for (int i = 0; i < records.size(); i++) {
+            Record r = records.get(i);
+            if (r.getId() == id) {
+                records.remove(i);
+                break;
             }
         }
 
