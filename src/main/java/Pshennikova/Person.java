@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Person extends Record {
+public class Person extends Note {
     private String firstName;
     private String lastName;
     private String email;
@@ -54,12 +54,13 @@ public class Person extends Record {
     @Override
     public String toString() {
         return "Person{" +
-                "id=" + getId() +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
                 ", phones=" + phones +
+                ", text='" + getText() + '\'' +
+                ", id=" + getId() +
                 '}';
     }
 }
