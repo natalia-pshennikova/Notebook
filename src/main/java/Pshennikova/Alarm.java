@@ -1,6 +1,6 @@
 package Pshennikova;
 
-public class Reminder extends Note implements Expirable {
+public class Alarm extends Note implements Expirable{
     private String time;
 
     public String getTime() {
@@ -27,7 +27,7 @@ public class Reminder extends Note implements Expirable {
 
     @Override
     public String toString() {
-        return "Reminder{" +
+        return "Alarm{" +
                 "id=" + getId() +
                 "text='" + getText() + '\'' +
                 "time='" + time + '\'' +

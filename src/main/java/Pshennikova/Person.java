@@ -52,15 +52,52 @@ public class Person extends Note {
     }
 
     @Override
+    public boolean contains(String str) {
+        String strLower = str.toLowerCase();
+
+        if (super.contains(str)) {
+            return true;
+        } else {
+            String firstNameLower = firstName.toLowerCase();
+            if (firstNameLower.contains(strLower)) {
+                return true;
+            } else {
+                String lastNameLower = lastName.toLowerCase();
+                if (lastNameLower.contains(strLower)) {
+                    return true;
+                } else {
+                    String addressLower = address.toLowerCase();
+                    if (addressLower.contains(strLower)) {
+                        return true;
+                    } else {
+                        String emailLower = email.toLowerCase();
+                        if (emailLower.contains(strLower)) {
+                            return true;
+                        } else {
+                            for (String p : phones) {
+                                String pLower = p.toLowerCase();
+                                if (pLower.contains(strLower)) {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
     public String toString() {
         return "Person{" +
-                "firstName='" + firstName + '\'' +
+                "id=" + getId() +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
                 ", phones=" + phones +
                 ", text='" + getText() + '\'' +
-                ", id=" + getId() +
                 '}';
     }
 }
