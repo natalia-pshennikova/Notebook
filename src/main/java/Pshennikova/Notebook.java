@@ -2,12 +2,10 @@ package Pshennikova;
 
 import asg.cliche.Command;
 import asg.cliche.Param;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Notebook {
-    private List<Record> records = new ArrayList<>();
+    private final NavigableMap<Integer, Record> records = new TreeMap<>();
 
     @Command
     public void createPerson(@Param(name = "firstName") String firstName,
@@ -23,14 +21,14 @@ public class Notebook {
         r.setAddress(address);
         r.setText(note);
         r.addPhones(phones);
-        records.add(r);
+        records.put(r.getId(), r);
     }
 
     @Command
     public void createNote(@Param(name = "text") String text) {
         Note n = new Note();
         n.setText(text);
-        records.add(n);
+        records.put(n.getId(), n);
     }
 
     @Command
@@ -39,27 +37,27 @@ public class Notebook {
         Alarm a = new Alarm();
         a.setText(text);
         a.setTimeAsString(time);
-        records.add(a);
+        records.put(a.getId(), a);
     }
 
     @Command
     public void createReminder(@Param(name = "text") String text,
-                               @Param(name = "time") String time) {
+                               @Param(name = "time", description = "format yyyy.mm.dd") String time) {
         Reminder rm = new Reminder();
         rm.setText(text);
         rm.setTimeAsString(time);
-        records.add(rm);
+        records.put(rm.getId(), rm);
     }
 
     @Command
-    public List<Record> list() {
-        return records;
+    public Collection<Record> list() {
+        return records.values();
     }
 
     @Command
     public List<Record> listExpired() {
         List<Record> result = new ArrayList<>();
-        for (Record r: records) {
+        for (Record r: records.values()) {
             if (r instanceof Expirable) {
                 Expirable e = (Expirable) r;
                 if (e.isExpired()) {
@@ -73,7 +71,7 @@ public class Notebook {
     @Command
     public List<Record> find(String str) {
         List<Record> result = new ArrayList<>();
-        for (Record r : records) {
+        for (Record r : records.values()) {
             if (r.contains(str)) {
                 result.add(r);
             }
@@ -82,14 +80,12 @@ public class Notebook {
     }
 
     @Command
-    public void remove(@Param(name = "id") int id) {
-        for (int i = 0; i < records.size(); i++) {
-            Record r = records.get(i);
-            if (r.getId() == id) {
-                records.remove(i);
-                break;
-            }
-        }
+    public Collection<Record> range(int start, int end) {
+       return records.subMap(start, end).values();
+    }
 
+    @Command
+    public void remove(@Param(name = "id") int id) {
+      records.remove(id);
     }
 }
