@@ -1,28 +1,43 @@
 package Pshennikova;
 
-public class Alarm extends Note implements Expirable{
-    private String time;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
-    public String getTime() {
+public class Alarm extends Note implements Expirable{
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm");
+
+    private LocalTime time;
+
+    public LocalTime getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(LocalTime time) {
         this.time = time;
     }
 
+    public void setTimeAsString(String str) {
+        LocalTime t = LocalTime.parse(str, formatter);
+        setTime(t);
+    }
+
+    public String getTimeAsString() {
+        LocalTime t = getTime();
+        return t.format(formatter);
+    }
     @Override
     public boolean contains(String str) {
         String strLower = str.toLowerCase();
-        if (super.contains(str)) {
+        return super.contains(strLower) || getTimeAsString().toLowerCase().contains(strLower);
+       /* if (super.contains(str)) {
             return true;
         } else {
-            String timeLower = time.toLowerCase();
+            String timeLower = getTimeAsString().toLowerCase();
             if (timeLower.contains(strLower)) {
                 return true;
             }
         }
-        return false;
+        return false;*/
     }
 
     @Override
@@ -30,12 +45,13 @@ public class Alarm extends Note implements Expirable{
         return "Alarm{" +
                 "id=" + getId() +
                 "text='" + getText() + '\'' +
-                "time='" + time + '\'' +
+                "time='" + getTimeAsString() + '\'' +
                 '}';
     }
 
     @Override
     public boolean isExpired() {
-        return false;
+        LocalTime now = LocalTime.now();
+        return now.isAfter(time);
     }
 }

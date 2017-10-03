@@ -38,7 +38,7 @@ public class Notebook {
                             @Param(name = "time") String time) {
         Alarm a = new Alarm();
         a.setText(text);
-        a.setTime(time);
+        a.setTimeAsString(time);
         records.add(a);
     }
 
@@ -47,13 +47,27 @@ public class Notebook {
                                @Param(name = "time") String time) {
         Reminder rm = new Reminder();
         rm.setText(text);
-        rm.setTime(time);
+        rm.setTimeAsString(time);
         records.add(rm);
     }
 
     @Command
     public List<Record> list() {
         return records;
+    }
+
+    @Command
+    public List<Record> listExpired() {
+        List<Record> result = new ArrayList<>();
+        for (Record r: records) {
+            if (r instanceof Expirable) {
+                Expirable e = (Expirable) r;
+                if (e.isExpired()) {
+                    result.add(r);
+                }
+            }
+        }
+        return result;
     }
 
     @Command
